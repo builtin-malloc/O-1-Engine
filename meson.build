@@ -16,6 +16,11 @@ project(
 ## == DEPENDENCIES =============================================================
 ## =============================================================================
 
+glad = static_library('glad', 'lib/GLAD/src/gl.c', include_directories : 'lib/GLAD/include',)
+glad_dep = declare_dependency(link_with : [ glad ], include_directories : 'lib/GLAD/include',)
+
+glfw_dep = dependency('glfw3')
+
 ## =============================================================================
 ## == LIBRARY ==================================================================
 ## =============================================================================
@@ -33,7 +38,7 @@ lib = static_library(
   'O1',
   lib_src,
   include_directories : 'include',
-  dependencies : [],
+  dependencies : [ glad_dep, glfw_dep ],
   install : true,
 )
 
@@ -53,7 +58,7 @@ exe_src = [
 exe = executable(
   'O1',
   exe_src,
-  dependencies : [ lib_dep ],
+  dependencies : [ lib_dep, glad_dep, glfw_dep ],
   install : true,
 )
 
