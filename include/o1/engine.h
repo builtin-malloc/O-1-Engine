@@ -3,6 +3,7 @@
 
 #include "o1/frontend/display.h"
 #include "o1/managers/display_manager.h"
+#include "o1/managers/memory_manager.h"
 #include "o1/managers/signal_manager.h"
 #include "o1/managers/time_manager.h"
 
@@ -15,6 +16,7 @@
 struct engine
 {
   struct display_manager display_manager;
+  struct memory_manager memory_manager;
   struct signal_manager signal_manager;
   struct time_manager time_manager;
 };
@@ -22,6 +24,7 @@ struct engine
 #define ENGINE_INITIALIZER                                                     \
   ((struct engine){                                                            \
     .display_manager = DISPLAY_MANAGER_INITIALIZER,                            \
+    .memory_manager = MEMORY_MANAGER_INITIALIZER,                              \
     .signal_manager = SIGNAL_MANAGER_INITIALIZER,                              \
     .time_manager = TIME_MANAGER_INITIALIZER,                                  \
   })
@@ -106,11 +109,20 @@ engine_render_runtime(struct engine* engine,
 /*                                 ACCESSORS                                 */
 /*****************************************************************************/
 
+/* MANAGERS ******************************************************************/
+
 [[nodiscard]] static inline struct display_manager*
 engine_display_manager(struct engine* engine)
 {
   assert(engine);
   return &engine->display_manager;
+}
+
+[[nodiscard]] static inline struct memory_manager*
+engine_memory_manager(struct engine* engine)
+{
+  assert(engine);
+  return &engine->memory_manager;
 }
 
 [[nodiscard]] static inline struct signal_manager*
