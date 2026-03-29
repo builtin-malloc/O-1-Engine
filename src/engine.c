@@ -1,4 +1,5 @@
 #include "o1/engine.h"
+#include "o1/managers/display_manager.h"
 
 #include <assert.h>
 
@@ -36,6 +37,8 @@ void
 engine_initialize_frontend(struct engine* engine)
 {
   assert(engine);
+
+  display_manager_initialize(&engine->display_manager);
 }
 
 void
@@ -66,6 +69,8 @@ void
 engine_finalize_frontend(struct engine* engine)
 {
   assert(engine);
+
+  display_manager_finalize(&engine->display_manager);
 }
 
 /*****************************************************************************/
